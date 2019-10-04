@@ -11,6 +11,7 @@ const int SCREEN_BPP = 32;
 SDL_Surface *g_screen = NULL;
 SDL_Surface *g_bkground = NULL;
 SDL_Event g_even;
+SDL_Surface* g_object; // use for manage character
 
 bool Init()
 {
@@ -35,7 +36,10 @@ SDL_Surface* LoadImage(std::string file_path)
 	{
 		optimize_image = SDL_DisplayFormat(load_image);
 		SDL_FreeSurface(load_image);
+		UINT32 color_key = SDL_MapRGB(optimize_image->format, 0, 0xFF, 0xFF);
+		SDL_SetColorKey(optimize_image, SDL_SRCCOLORKEY, color_key);
 	}
+
 	return optimize_image;
 }
 
@@ -66,6 +70,11 @@ int main(int arc, char* argv[])
 	}
 
 	ApplySurface(g_bkground, g_screen, 0, 0);
+	
+	g_object = LoadImage("human64x91.png");
+	if (g_object == NULL)
+		return 0;
+	ApplySurface(g_object, g_screen, 300, 420);
 
 	while (!is_quit)
 	{
