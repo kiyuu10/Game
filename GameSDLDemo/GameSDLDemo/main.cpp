@@ -24,7 +24,7 @@ int main(int arc, char* argv[])
 	SDL_Surface *image;
 	
 	if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
-		return -1;
+		return 1;
 
 	screen = SDL_SetVideoMode(1200, 600, 32, SDL_SWSURFACE);
 	image = LoadImage("bg2.png");
